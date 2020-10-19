@@ -15,6 +15,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: ['basic'] }
   },
+  {
+    path: '**',
+    redirectTo: '/tool/dashboard',
+    pathMatch: 'full'
+  },
 ];
 
 @NgModule({
