@@ -14,8 +14,7 @@ services:
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=admin
     command: mysqld --lower_case_table_names=1
-    volumes:
-      - ./mariadb-data:/var/lib/mysql
+    #volumes:
       #- ./:/docker-entrypoint-initdb.d
   keycloak:
     image: jboss/keycloak
@@ -31,7 +30,7 @@ services:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
       - KEYCLOAK_IMPORT=/tmp/example-realm.json
-      #- PROXY_ADDRESS_FORWARDING=true
+      - PROXY_ADDRESS_FORWARDING=true
     volumes:
       - ./realm-export.json:/tmp/example-realm.json
     depends_on:
