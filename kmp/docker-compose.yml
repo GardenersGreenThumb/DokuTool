@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    networks:
+      - keycloak-network
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=dokutool
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+    command: mysqld --lower_case_table_names=1
+    volumes:
+      - ./mariadb-data:/var/lib/mysql
+      #- ./:/docker-entrypoint-initdb.d
+  keycloak:
+    image: jboss/keycloak
+    container_name: keycloak
+    networks:
+      - keycloak-network
+    ports:
+      - 8080:8080
+    environment:
+      - DB_DATABASE=dokutool
+      - DB_USER=admin
+      - DB_PASSWORD=admin
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - KEYCLOAK_IMPORT=/tmp/example-realm.json
+      #- PROXY_ADDRESS_FORWARDING=true
+    volumes:
+      - ./realm-export.json:/tmp/example-realm.json
+    depends_on:
+      - mariadb
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      - PMA_HOST=mariadb
+      - PMA_ABSOLUTE_URI=http://localhost:8081/
+    networks:
+      - keycloak-network
+    ports:
+      - 8081:80
+    links:
+      - mariadb:db
+    depends_on:
+      - mariadb
+
+networks:
+  keycloak-network:
+    name: keycloak-network
