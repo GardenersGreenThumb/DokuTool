@@ -30,7 +30,7 @@ services:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
       - KEYCLOAK_IMPORT=/tmp/example-realm.json
-      - PROXY_ADDRESS_FORWARDING=true
+      #- PROXY_ADDRESS_FORWARDING=true
     volumes:
       - ./realm-export.json:/tmp/example-realm.json
     depends_on:
