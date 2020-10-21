@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object name="Gießwagen">
+	<section name="Allgemein">
+		<input type="string" min="5" required="true">
+			<label>Name</label>
+			<help>Gebe den Namen des Gießwagens ein.</help>
+		</input>
+		<input type="number" float="true">
+			<label>Breite</label>
+			<unit>Meter</unit>
+		</input>
+	</section>
+	<section name="Leistung">
+		<input type="number">
+			<label>Fahrlänge</label>
+			<unit>Meter</unit>
+		</input>
+		<input type="number">
+			<label>Maximaler Output</label>
+			<unit>Liter</unit>
+		</input>
+	</section>
+</object>
