@@ -6,6 +6,8 @@ var connection = db.createConnection({
     password: 'admin',
     database: 'dokutool'
 })
+// Import Types
+const types =  require("./types.json");
 
 //XMLParser und Fileread
 const xml2js = require('xml2js');
@@ -30,16 +32,10 @@ for (let i = 2; i < process.argv.length; i++) {
                         attributeName = JSON.parse(JSON.stringify(attributeName).replace(" ", "_"));
                     }
                     var colum = attributeName + " ";
-                    switch (input['attr'].type) {
-                        case 'string':
-                            colum += "varchar(255)";
-                            break;
-                        case 'boolean':
-                            colum += "bool";
-                            break;
-                        case 'number':
-                            colum += "numeric";
-                            break;
+                    if (types[input['attr'].type] != undefined) {
+                        colum += types[input['attr'].type].sql;
+                    } else {
+                        throw "Could not find type " + input['attr'].type + ". Resolve issue first!";
                     }
                     if (input['attr'].required === 'true') {
                         colum += " NOT NULL"
@@ -52,8 +48,10 @@ for (let i = 2; i < process.argv.length; i++) {
                 sqlStatement += colum + ", ";
             })
             sqlStatement += " PRIMARY KEY (id) );";
+            console.log(sqlStatement);
             // console.log(sqlStatement);
             //Tabelle mit Namen und Colums in der Db anglegen
+            /*
             connection.query(sqlStatement, function (error, results) {
                 if (error) {
                     if (error.errno === 1050) {
@@ -64,7 +62,8 @@ for (let i = 2; i < process.argv.length; i++) {
                 } else {
                     console.log('Tabelle mit dem Namen: ' + objectName + ' wurde erfolgreich angelegt');
                 }
-            })
+            });
+            */
         } else {
             console.log(error);
         }

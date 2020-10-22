@@ -1,0 +1,11 @@
+{
+ "string": {
+    "sql": "varchar(255)"
+ },
+ "boolean": {
+    "sql": "bool"
+ },
+ "numberR": {
+     "sql": "numeric"
+ }
+}
