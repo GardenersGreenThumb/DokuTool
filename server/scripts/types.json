@@ -5,7 +5,10 @@
  "boolean": {
     "sql": "bool"
  },
- "numberR": {
+ "number": {
      "sql": "numeric"
+ },
+ "dropdown":{
+    "sql": "int"
  }
 }
