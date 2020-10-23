@@ -6,6 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
+/**
+ * Diese Funktion initialisiert Keycloak
+ * Es müssen die jeweiligen Parameter zur Verbindung mit dem Keycloak Server angegeben werden.
+ * Alle Dateien im Assets Ordner werden nicht von Keycloak geschützt.
+ * Hier wird auch die 'silent-check-sso.html' eingebunden.
+ * Mehr Infos: https://www.npmjs.com/package/keycloak-angular
+ * @param keycloak 
+ */
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({

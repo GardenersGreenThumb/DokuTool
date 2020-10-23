@@ -6,6 +6,11 @@ import {
 } from '@angular/router';
 import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
 
+/*
+Dieser AuthGuard ist ein spezieller AuthGuard für Keycloak. Er ist so so konfiguriert, dass Routen nur für manche Rollen zugänglich sind.
+Er ist 1:1 aus der Dokumentation für keycloak-angular (https://www.npmjs.com/package/keycloak-angular) übernommen.
+Kann erweitert werden.
+*/
 @Injectable({
     providedIn: 'root',
 })
