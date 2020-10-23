@@ -1,2 +1,4 @@
 # MariaDB
 /kmp/mariadb-data/
+# Server Node-Modules
+/server/node_modules/
