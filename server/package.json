@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "handlebars": "^4.7.6",
     "mysql": "^2.18.1",
     "xml2js": "^0.4.23"
   },

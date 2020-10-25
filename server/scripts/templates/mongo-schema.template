@@ -1,0 +1,7 @@
+const mongoose = require('mongoose');
+
+const {{{nameLc}}}Model = mongoose.Schema(
+    {{{jsonData}}}
+);
+
+module.exports = mongoose.model('{{{nameLc}}}', {{name}}Model);
