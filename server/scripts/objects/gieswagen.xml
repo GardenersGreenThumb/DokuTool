@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<object name="Gießwagen">
+<object name="Gieswagen">
 	<section name="Allgemein">
 		<input type="string" min="5" required="true">
 			<label>Name</label>
