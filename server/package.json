@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "mongoose": "^5.10.10",
-    "mysql": "^2.18.1",
+    "handlebars": "^4.7.6",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {},

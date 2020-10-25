@@ -1,13 +1,14 @@
-// Import Types
-const types = require("./types.json");
-
-//XMLParser und Fileread
+// Import packages
+const Handlebars = require("handlebars");
 const xml2js = require('xml2js');
 const fs = require('fs');
 const parser = new xml2js.Parser({ attrkey: "attr" });
 
+// Import Model template
+const template = Handlebars.compile(fs.readFileSync("./templates/mongo-schema.template", "utf8"));
+
 var objectName;
-var jsonData= "{ ";
+var jsonData = "{ ";
 //XML Files anhand des uebergebenen Parameters einlesen
 for (let i = 2; i < process.argv.length; i++) {
     let xmlString = fs.readFileSync("./objects/" + process.argv[i], "utf8");
@@ -25,13 +26,13 @@ for (let i = 2; i < process.argv.length; i++) {
                         attributeName = input.label;
                     }
                     //label fuer die Datenbank zu LowerCase umwandeln
-                    attributeName = JSON.stringify(attributeName).toLowerCase();
+                    attributeName = attributeName.toString().toLowerCase();
                     //leerzeichen durch _ ersetzen
                     if (attributeName.includes(" ")) {
                         attributeName = attributeName.replace(" ", "_");
                     }
-                    jsonData += JSON.stringify(attributeName) + ": {";
-                    jsonData += '"type": ' + JSON.stringify(input['attr'].type);
+                    jsonData += attributeName + ": {";
+                    jsonData += '"type": ' + input['attr'].type;
                     if (input['attr'].required === 'true') {
                         jsonData += ', "required": "{PATH} is required!"';
                     }
@@ -50,4 +51,18 @@ for (let i = 2; i < process.argv.length; i++) {
 
 jsonData += '}';
 
-fs.writeFile(objectName +".js", "var mongoose = require('mongoose'); const " + JSON.stringify(objectName).toLowerCase() +"Model = mongoose.Schema(" + jsonData + "); module.exports = mongoose.model(" + objectName + ", " + JSON.stringify(objectName).toLowerCase()  +"Model);");
+// Daten verpacken
+var data = {
+    "name": objectName,
+    "nameLc": objectName.toLowerCase(),
+    "jsonData": jsonData
+}
+// Template befüllen
+var newModelFile = template(data);
+// Model als Datei in /models speichern
+fs.writeFile("../models/" + objectName + ".js", newModelFile, (err) => {
+    if (err) {
+        throw err;
+    }
+    console.log('New Model ' + objectName + ' saved!');
+});
